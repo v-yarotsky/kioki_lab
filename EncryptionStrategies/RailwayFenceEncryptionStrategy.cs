@@ -81,11 +81,11 @@ namespace CryptographyTemplate.EncryptionStrategies
         private void railwaize(int length, int fenceSize, ResultAccumulator accumulator)
         {
             int period = 2 * fenceSize - 2;
-            for (int line = 0; line < fenceSize; line++)
+            for (int step = 0; step <= period / 2; step++)
             {
-                for (int j = line; j < length; j++)
+                for (int j = step; j < length; j++)
                 {
-                    if (j % period == line || j % period == period - line)
+                    if (j % period == step || j % period == period - step)
                     {
                         accumulator.Accumulate(j);
                     }

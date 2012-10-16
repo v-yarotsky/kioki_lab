@@ -58,7 +58,7 @@ namespace CryptographyTemplate
                     }
                 }
             }
-            requiredCellsCount = currentIndex - 1;
+            requiredCellsCount = currentIndex - 1 - (size % 2 == 0 ? 0 : 1);
             selectedCellsCount = 0;
         }
 
@@ -89,7 +89,8 @@ namespace CryptographyTemplate
                         Dock = DockStyle.Fill,
                         CheckAlign = ContentAlignment.MiddleCenter,
                         Text = indices[i][j].ToString(),
-                        TextAlign = ContentAlignment.TopCenter
+                        TextAlign = ContentAlignment.TopCenter,
+                        Enabled = !(size % 2 == 1 && i == (size / 2) && i == j)
                     };
                     cells[i][j].Click += CellClick;
                     gridLayout.Controls.Add(cells[i][j], j, i);

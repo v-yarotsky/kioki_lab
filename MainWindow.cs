@@ -49,15 +49,15 @@ namespace CryptographyTemplate
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 EncryptionStrategy s = GetEncryptionStrategy();
                 outputText.Text = s.encrypt();
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show(err.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (Exception err)
+            //{
+            //    MessageBox.Show(err.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         private EncryptionStrategy GetEncryptionStrategy()

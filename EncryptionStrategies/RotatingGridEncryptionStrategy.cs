@@ -18,31 +18,35 @@ namespace CryptographyTemplate.EncryptionStrategies
 
         public string encrypt()
         {
-            int size = (int)Math.Ceiling((double)input.Length / grid.Length) * grid.Length;
+            int n = (int)Math.Sqrt(grid.Length);
+            int numberOfHoles = NumberOfHoles(n);
+
+            int size = (int)Math.Ceiling((double)input.Length / (4 * numberOfHoles)) * grid.Length;
             char[] source = new char[size];
             input.ToCharArray().CopyTo(source, 0);
             char[] result = new char[size];
-            bool isOddMatrixSize = grid.Length % 2 != 0;
-            int n = (int)Math.Sqrt(grid.Length);
 
-            int gridHolesCount = isOddMatrixSize ? n - 1 : 1;
 
             int counter = 0;
-            int substrNumber = 0;
-            char[] substr = new char[4 * n];
 
-            while (substrNumber * 4 * n < source.Length)
+            int substrNumber = 0;
+            int substrLength = 4 * numberOfHoles;
+            char[] substr = new char[grid.Length];
+
+            int substringsCount = (int)Math.Ceiling((double)input.Length / (4 * numberOfHoles));
+
+            while (substrNumber < substringsCount)
             {
-                Array.Copy(source, substrNumber * 4 * n, substr, 0, 4 * n);
+                Array.Copy(source, substrNumber * substrLength, substr, 0, substrLength);
                 for (int side = 0; side < 4; side++)
                 {
                     for (int i = 0; i < n; i++)
                     {
                         for (int j = 0; j < n; j++)
                         {
-                            if (grid[i, j] && result[substrNumber * 4 * n + i * n + j] == '\0')
+                            if (grid[i, j])
                             {
-                                result[substrNumber * 4 * n + i * n + j] = substr[counter++];
+                                result[substrNumber * grid.Length + i * n + j] = substr[counter++];
                             }
                         }
                     }
@@ -51,12 +55,12 @@ namespace CryptographyTemplate.EncryptionStrategies
                 counter = 0;
                 substrNumber++;
             }
-            string noise = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTWXYZ";
+
             for (int i = 0; i < result.Length; i++)
             {
                 if (result[i] == '\0')
                 {
-                    result[i] = noise[i % noise.Length];
+                    result[i] = ' ';
                 }
             }
             return new String(result);
@@ -64,16 +68,20 @@ namespace CryptographyTemplate.EncryptionStrategies
 
         public string decrypt()
         {
+            int n = (int)Math.Sqrt(grid.Length);
+            int numberOfHoles = NumberOfHoles(n);
+
             int size = (int)Math.Ceiling((double)input.Length / grid.Length) * grid.Length;
             char[] source = new char[size];
             input.ToCharArray().CopyTo(source, 0);
-            List<char> result = new List<char>();
-            bool isOddMatrixSize = grid.Length % 2 != 0;
-            int n = (int)Math.Sqrt(grid.Length);
-            int matrixCentralIndex = n / 2 + 1;
-            
+            char[] result = new char[size];
+
+            int counter = 0;
             int substrNumber = 0;
-            while (substrNumber * 4 * n < source.Length)
+            int substringsCount = (int)Math.Ceiling((double)input.Length / grid.Length);
+            char[] substr = new char[grid.Length];
+
+            while (substrNumber < substringsCount)
             {
                 for (int side = 0; side < 4; side++)
                 {
@@ -83,12 +91,7 @@ namespace CryptographyTemplate.EncryptionStrategies
                         {
                             if (grid[i, j])
                             {
-                                var isCellReadBefore = isOddMatrixSize &&
-                                                    i == matrixCentralIndex &&
-                                                    j == matrixCentralIndex &&
-                                                    side != 0;
-                                if (!isCellReadBefore)
-                                    result.Add(source[substrNumber * 4 * n + i * n + j]);
+                                result[counter++] = source[substrNumber * grid.Length + i * n + j];
                             }
                         }
                     }
@@ -96,14 +99,20 @@ namespace CryptographyTemplate.EncryptionStrategies
                 }
                 substrNumber++;
             }
-            for (int i = 0; i < result.Count; i++)
+            for (int i = 0; i < result.Length; i++)
             {
                 if (result[i] == '\0')
                 {
-                    result[i] = '_';
+                    result[i] = ' ';
                 }
             }
             return new String(result.ToArray<char>());
+        }
+
+        private int NumberOfHoles(int n)
+        {
+            int a = n / 2;
+            return a * (n - a);
         }
 
         private bool[,] RotateMatrix(bool[,] matrix)

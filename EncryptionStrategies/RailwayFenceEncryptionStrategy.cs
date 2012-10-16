@@ -80,23 +80,16 @@ namespace CryptographyTemplate.EncryptionStrategies
 
         private void railwaize(int length, int fenceSize, ResultAccumulator accumulator)
         {
+            int period = 2 * fenceSize - 2;
             for (int line = 0; line < fenceSize; line++)
             {
-                int offset = line;
-                int distanceBetweenPairElements = line == fenceSize - 1 ? 0 : (fenceSize - line - 1) * 2 - 1;
-                int distanceBetweenPairs = line == 0 ? 0 : line * 2 - 1;
-
-                int counter = 0;
-                do
+                for (int j = line; j < length; j++)
                 {
-                    int delta = counter++ % 2 == 0 ? distanceBetweenPairElements : distanceBetweenPairs;
-                    if (delta == 0)
+                    if (j % period == line || j % period == period - line)
                     {
-                        continue;
+                        accumulator.Accumulate(j);
                     }
-                    accumulator.Accumulate(offset);
-                    offset += delta + 1;
-                } while (offset < length);
+                }
             }
         }
     }

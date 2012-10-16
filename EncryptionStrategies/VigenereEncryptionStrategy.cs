@@ -14,6 +14,10 @@ namespace CryptographyTemplate.EncryptionStrategies
         {
             this.input = input;
             this.key = key;
+            if (key == "")
+            {
+                throw new ArgumentException("Ключ не может быть пустым");
+            }
         }
 
         public string encrypt()
@@ -38,16 +42,18 @@ namespace CryptographyTemplate.EncryptionStrategies
 
         public char VigenereTableValue(char inputChar, char keyChar)
         {
-            int code = (int)inputChar + (int)keyChar;
-            return System.Convert.ToChar(code % char.MaxValue);
+            int alphabetLength = char.MaxValue + 1;
+            int code = ((int)inputChar + (int)keyChar) % alphabetLength;
+            return System.Convert.ToChar(code);
         }
 
         public char VigenereDecryptTableValue(char encryptedInputChar, char keyChar)
         {
+            int alphabetLength = char.MaxValue + 1;
             int code = (int)encryptedInputChar - (int)keyChar;
-            if (code <= 0)
-                code = char.MaxValue + code;
-            return System.Convert.ToChar(code % char.MaxValue);
+            if (code < 0)
+                code = alphabetLength + code;
+            return System.Convert.ToChar(code);
         }
     }
 }

@@ -39,54 +39,42 @@ namespace CryptographyTemplate.EncryptionStrategies
             return decryptionResultAccumulator.GetResult();
         }
 
-        abstract class ResultAccumulator
+        public interface ResultAccumulator
+        {
+            void Accumulate(int position);
+            string GetResult();
+        }
+
+        public class EncryptResultAccumulator : ResultAccumulator
         {
             protected String input;
+            protected char[] result;
+            protected int counter = 0;
 
-            public ResultAccumulator(String input)
+            public EncryptResultAccumulator(String input)
             {
                 this.input = input;
+                this.result = new char[input.Length];
             }
 
-            public abstract void Accumulate(int position);
-            public abstract String GetResult();
-        }
-
-        class EncryptResultAccumulator : ResultAccumulator
-        {
-            private List<char> result = new List<char>();
-
-            public EncryptResultAccumulator(String input) : base(input) { }
-
-            public override void Accumulate(int position)
+            public virtual void Accumulate(int position)
             {
-                result.Add(this.input[position]);
+                result[counter++] = input[position];
             }
 
-            public override string GetResult()
+            public string GetResult()
             {
-                return new String(this.result.ToArray());
+                return new String(result);
             }
         }
 
-        class DecryptResultAccumulator : ResultAccumulator
+        class DecryptResultAccumulator : EncryptResultAccumulator
         {
-            private char[] result;
-            private int counter = 0;
-
-            public DecryptResultAccumulator(String input) : base(input)
-            {
-                this.result = new char[this.input.Length];
-            }
+            public DecryptResultAccumulator(String input) : base(input) { }
 
             public override void Accumulate(int position)
             {
-                this.result[position] = this.input[this.counter++];
-            }
-
-            public override string GetResult()
-            {
-                return new String(this.result);
+                result[position] = input[counter++];
             }
         }
 

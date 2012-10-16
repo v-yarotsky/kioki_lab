@@ -23,7 +23,7 @@ namespace CryptographyTemplate
             {
                 return;
             }
-            String input = System.IO.File.ReadAllText(openFileDialog.FileName);
+            String input = System.IO.File.ReadAllText(openFileDialog.FileName, Encoding.UTF8);
             inputText.Text = input;
         }
 
@@ -39,7 +39,7 @@ namespace CryptographyTemplate
             {
                 return;
             }
-            System.IO.File.WriteAllText(saveFileDialog.FileName, outputText.Text);
+            System.IO.File.WriteAllText(saveFileDialog.FileName, outputText.Text, Encoding.UTF8);
         }
 
         private void MainWindow_Shown(object sender, EventArgs e)
@@ -49,15 +49,15 @@ namespace CryptographyTemplate
 
         private void encryptButton_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 EncryptionStrategy s = GetEncryptionStrategy();
                 outputText.Text = s.encrypt();
-            //}
-            //catch (Exception err)
-            //{
-            //    MessageBox.Show(err.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private EncryptionStrategy GetEncryptionStrategy()
@@ -67,8 +67,17 @@ namespace CryptographyTemplate
 
             switch (algorithmDrowdown.Text)
             {
-                case "Железнодорожная изгородь": 
-                    result = new EncryptionStrategies.RailwayFenceEncryptionStrategy(input, int.Parse(keyInput.Text)); break;
+                case "Железнодорожная изгородь":
+                    try
+                    {
+                        int key = int.Parse(keyInput.Text);
+                        result = new EncryptionStrategies.RailwayFenceEncryptionStrategy(input, key);
+                    }
+                    catch (FormatException err)
+                    {
+                        throw new ArgumentException("Ключ должен быть числом");
+                    }
+                    break;
                 case "\"Ключевая фраза\"": 
                     result = new EncryptionStrategies.PassPhraseEncryptionStrategy(input, keyInput.Text); break;
                 case "Метод поворачивающейся решетки":

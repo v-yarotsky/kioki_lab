@@ -40,10 +40,10 @@
             this.decryptButton = new System.Windows.Forms.ToolStripButton();
             this.encryptButton = new System.Windows.Forms.ToolStripButton();
             this.ioContainer = new System.Windows.Forms.TableLayoutPanel();
-            this.inputText = new System.Windows.Forms.TextBox();
-            this.outputText = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.inputText = new System.Windows.Forms.RichTextBox();
+            this.outputText = new System.Windows.Forms.RichTextBox();
             this.toolStrip.SuspendLayout();
             this.ioContainer.SuspendLayout();
             this.SuspendLayout();
@@ -161,28 +161,6 @@
             this.ioContainer.Size = new System.Drawing.Size(692, 341);
             this.ioContainer.TabIndex = 1;
             // 
-            // inputText
-            // 
-            this.inputText.BackColor = System.Drawing.SystemColors.Window;
-            this.inputText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.inputText.Location = new System.Drawing.Point(3, 3);
-            this.inputText.Multiline = true;
-            this.inputText.Name = "inputText";
-            this.inputText.ReadOnly = true;
-            this.inputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.inputText.Size = new System.Drawing.Size(340, 335);
-            this.inputText.TabIndex = 0;
-            // 
-            // outputText
-            // 
-            this.outputText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputText.Location = new System.Drawing.Point(349, 3);
-            this.outputText.Multiline = true;
-            this.outputText.Name = "outputText";
-            this.outputText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.outputText.Size = new System.Drawing.Size(340, 335);
-            this.outputText.TabIndex = 1;
-            // 
             // openFileDialog
             // 
             this.openFileDialog.DefaultExt = "txt";
@@ -194,6 +172,26 @@
             this.saveFileDialog.DefaultExt = "txt";
             this.saveFileDialog.FileName = "output";
             this.saveFileDialog.Filter = "Text files (*.txt) | *.txt";
+            // 
+            // inputText
+            // 
+            this.inputText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.inputText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.inputText.Location = new System.Drawing.Point(3, 3);
+            this.inputText.Name = "inputText";
+            this.inputText.Size = new System.Drawing.Size(340, 335);
+            this.inputText.TabIndex = 2;
+            this.inputText.Text = "";
+            // 
+            // outputText
+            // 
+            this.outputText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.outputText.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.outputText.Location = new System.Drawing.Point(349, 3);
+            this.outputText.Name = "outputText";
+            this.outputText.Size = new System.Drawing.Size(340, 335);
+            this.outputText.TabIndex = 3;
+            this.outputText.Text = "";
             // 
             // MainWindow
             // 
@@ -209,7 +207,6 @@
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.ioContainer.ResumeLayout(false);
-            this.ioContainer.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,12 +223,12 @@
         private System.Windows.Forms.ToolStripLabel algorithmDropdownLabel;
         private System.Windows.Forms.ToolStripLabel keyInputLabel;
         private System.Windows.Forms.TableLayoutPanel ioContainer;
-        private System.Windows.Forms.TextBox inputText;
-        private System.Windows.Forms.TextBox outputText;
         private System.Windows.Forms.ToolStripButton saveFileButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.RichTextBox inputText;
+        private System.Windows.Forms.RichTextBox outputText;
     }
 }
 

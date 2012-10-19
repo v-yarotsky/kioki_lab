@@ -51,9 +51,10 @@
     <Compile Include="EncryptionStrategies\RotatingGridEncryptionStrategy.cs" />
     <Compile Include="EncryptionStrategies\PassPhraseEncryptionStrategy.cs" />
     <Compile Include="EncryptionStrategies\RailwayFenceEncryptionStrategy.cs" />
-    <Compile Include="X:\RSAEncryptionStrategy.cs">
-      <Link>EncryptionStrategies\RSAEncryptionStrategy.cs</Link>
-    </Compile>
+    <Compile Include="Extensions\BigIntegerExtensions.cs" />
+    <Compile Include="Utils\RandomGenerator.cs" />
+    <Compile Include="Utils\RandomNumberGenerator.cs" />
+    <Compile Include="Utils\RandomPrimeGenerator.cs" />
     <Compile Include="EncryptionStrategies\VigenereEncryptionStrategy.cs" />
     <Compile Include="EncryptionStrategy.cs" />
     <Compile Include="GridForm.cs">

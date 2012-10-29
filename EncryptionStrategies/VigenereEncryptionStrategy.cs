@@ -50,9 +50,10 @@ namespace CryptographyTemplate.EncryptionStrategies
         public char VigenereDecryptTableValue(char encryptedInputChar, char keyChar)
         {
             int alphabetLength = char.MaxValue + 1;
-            int code = (int)encryptedInputChar - (int)keyChar;
-            if (code < 0)
-                code = alphabetLength + code;
+            //int code = (int)encryptedInputChar - (int)keyChar;
+            //if (code < 0)
+            //    code = alphabetLength + code;
+            int code = ((int)encryptedInputChar + alphabetLength - (int)keyChar) % alphabetLength;
             return System.Convert.ToChar(code);
         }
     }

@@ -40,10 +40,10 @@
             this.decryptButton = new System.Windows.Forms.ToolStripButton();
             this.encryptButton = new System.Windows.Forms.ToolStripButton();
             this.ioContainer = new System.Windows.Forms.TableLayoutPanel();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.inputText = new System.Windows.Forms.RichTextBox();
             this.outputText = new System.Windows.Forms.RichTextBox();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.toolStrip.SuspendLayout();
             this.ioContainer.SuspendLayout();
             this.SuspendLayout();
@@ -108,7 +108,9 @@
             "Железнодорожная изгородь",
             "\"Ключевая фраза\"",
             "Метод поворачивающейся решетки",
-            "Шифр Вижинера"});
+            "Шифр Вижинера",
+            "Криптосистема Рабина",
+            "Цифровая подпись RSA"});
             this.algorithmDrowdown.Name = "algorithmDrowdown";
             this.algorithmDrowdown.Size = new System.Drawing.Size(170, 25);
             // 
@@ -161,18 +163,6 @@
             this.ioContainer.Size = new System.Drawing.Size(692, 341);
             this.ioContainer.TabIndex = 1;
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.DefaultExt = "txt";
-            this.openFileDialog.FileName = "input";
-            this.openFileDialog.Filter = "Text files (*.txt) | *.txt";
-            // 
-            // saveFileDialog
-            // 
-            this.saveFileDialog.DefaultExt = "txt";
-            this.saveFileDialog.FileName = "output";
-            this.saveFileDialog.Filter = "Text files (*.txt) | *.txt";
-            // 
             // inputText
             // 
             this.inputText.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -192,6 +182,18 @@
             this.outputText.Size = new System.Drawing.Size(340, 335);
             this.outputText.TabIndex = 3;
             this.outputText.Text = "";
+            // 
+            // openFileDialog
+            // 
+            this.openFileDialog.DefaultExt = "txt";
+            this.openFileDialog.FileName = "input";
+            this.openFileDialog.Filter = "Text files (*.txt) | *.txt";
+            // 
+            // saveFileDialog
+            // 
+            this.saveFileDialog.DefaultExt = "txt";
+            this.saveFileDialog.FileName = "output";
+            this.saveFileDialog.Filter = "Text files (*.txt) | *.txt";
             // 
             // MainWindow
             // 

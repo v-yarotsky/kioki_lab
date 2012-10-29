@@ -11,6 +11,8 @@ namespace CryptographyTemplate
 {
     public partial class MainWindow : Form
     {
+        public enum Mode { Encrypt, Decrypt };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -51,8 +53,16 @@ namespace CryptographyTemplate
         {
             try
             {
-                EncryptionStrategy s = GetEncryptionStrategy();
-                outputText.Text = s.encrypt();
+                if (IsSignatureMode())
+                {
+                    Signer s = GetSigner();
+                    outputText.Text = s.sign(inputText.Text, signKey).ToString();
+                }
+                else
+                {
+                    EncryptionStrategy s = GetEncryptionStrategy();
+                    outputText.Text = s.encrypt();
+                }
             }
             catch (Exception err)
             {
@@ -60,7 +70,7 @@ namespace CryptographyTemplate
             }
         }
 
-        private EncryptionStrategy GetEncryptionStrategy()
+        private EncryptionStrategy GetEncryptionStrategy(Mode mode = Mode.Encrypt)
         {
             EncryptionStrategy result = null;
             String input = inputText.Text;
@@ -88,8 +98,38 @@ namespace CryptographyTemplate
                     } break;
                 case "Шифр Вижинера": 
                     result = new EncryptionStrategies.VigenereEncryptionStrategy(input, keyInput.Text); break;
+                case "Криптосистема Рабина":
+                    RabinKeyForm keyForm = new RabinKeyForm(mode);
+                    if (keyForm.ShowDialog() == DialogResult.OK)
+                    {
+                        result = new EncryptionStrategies.RabinEncryptionStrategy(input, mode == Mode.Encrypt ? keyForm.PublicKey : keyForm.PrivateKey);
+                    } break;
                 default:
                     throw new ArgumentException("Выберите метод шифрования");
+            }
+
+            return result;
+        }
+
+        private SignKey signKey;
+
+        public Signer GetSigner(Mode mode = Mode.Encrypt)
+        {
+            Signer result = null;
+            String input = inputText.Text;
+
+            switch (algorithmDrowdown.Text)
+            {
+                case "Цифровая подпись RSA":
+                    RSAKeyForm rsaKeyForm = new RSAKeyForm(mode);
+                    if (rsaKeyForm.ShowDialog() == DialogResult.OK)
+                    {
+                        signKey = mode == Mode.Encrypt ? rsaKeyForm.PrivateKey : rsaKeyForm.PublicKey;
+                        result = new RSASigner();
+                    }
+                    break;
+                default:
+                    throw new ArgumentException("Выберите метод подписи");
             }
 
             return result;
@@ -99,13 +139,33 @@ namespace CryptographyTemplate
         {
             try
             {
-                EncryptionStrategy s = GetEncryptionStrategy();
-                outputText.Text = s.decrypt();
+                if (IsSignatureMode())
+                {
+                    Signer s = GetSigner(Mode.Decrypt);
+                    if (s.checkSignature(new SignedString(inputText.Text), signKey))
+                    {
+                        System.Windows.Forms.MessageBox.Show("Подпись верна");
+                    }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Подпись НЕ верна");
+                    }
+                }
+                else
+                {
+                    EncryptionStrategy s = GetEncryptionStrategy(Mode.Decrypt);
+                    outputText.Text = s.decrypt();
+                }
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private bool IsSignatureMode()
+        {
+            return algorithmDrowdown.Text == "Цифровая подпись RSA";
         }
     }
 }

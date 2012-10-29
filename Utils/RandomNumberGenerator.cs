@@ -6,7 +6,7 @@ using System.Numerics;
 
 namespace CryptographyTemplate.Utils
 {
-    class RandomNumberGenerator : RandomGenerator
+    public class RandomNumberGenerator : RandomGenerator
     {
         private const int MIN_NUM = 0;
         private const int MAX_NUM = 99999;
@@ -36,7 +36,7 @@ namespace CryptographyTemplate.Utils
         public BigInteger Next(BigInteger min, BigInteger max, Predicate<BigInteger> p)
         {
             BigInteger result;
-            do { result = rand.Next((int)min, (int)max); } while (!p(result));
+            do { result = rand.Next() + min; } while (result > max || !p(result));
             return result;
         }
     }

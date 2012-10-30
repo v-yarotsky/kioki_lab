@@ -32,9 +32,10 @@ namespace CryptographyTemplate
     public struct SignedString
     {
         public string Text { get; private set; }
-        public BigInteger Signature { get; private set; }
+        public string Signature { get; private set; }
 
-        public SignedString(string text, BigInteger signature) : this()
+        public SignedString(string text, string signature)
+            : this()
         {
             Text = text;
             Signature = signature;
@@ -45,9 +46,13 @@ namespace CryptographyTemplate
         {
             try
             {
-                Match matches = new Regex(@"\A(.*) (\d+)\Z", RegexOptions.Singleline).Match(signedText);
+                Match matches = new Regex(@"\A(.*) ([:\d]+)\Z", RegexOptions.Singleline).Match(signedText);
+                if (matches.Groups.Count < 3)
+                {
+                    throw new FormatException();
+                }
                 Text = matches.Groups[1].Value;
-                Signature = BigInteger.Parse(matches.Groups[2].Value);
+                Signature = matches.Groups[2].Value;
             }
             catch (FormatException e)
             {
@@ -57,49 +62,40 @@ namespace CryptographyTemplate
 
         public override string ToString()
         {
-            return Text + " " + Signature.ToString();
+            return Text + " " + Signature;
         }
     }
 
     public class RSASigner : Signer
     {
+        Encoding utf8 = new UTF8Encoding();
+
         private const int P = 23819;
         private const int Q = 80251;
         private const int H0 = 100;
+        private char DELIMITER = ':';
 
         public SignedString sign(string text, SignKey key)
         {
-            BigInteger textDigest = digest(text);
-            BigInteger s = BigInteger.ModPow(textDigest, key.Exponent, key.Modulus);
-            SignedString result = new SignedString(text, s);
+            string textDigest = digest(text);
+            var signatureQuery = from b in utf8.GetBytes(textDigest) select BigInteger.ModPow(b, key.Exponent, key.Modulus).ToString();
+            string signature = String.Join(DELIMITER.ToString(), signatureQuery.ToArray<String>());
+            SignedString result = new SignedString(text, signature);
             return result;
         }
 
         public bool checkSignature(SignedString signedText, SignKey key)
         {
-            BigInteger calculatedTextDigest = BigInteger.ModPow(signedText.Signature, key.Exponent, key.Modulus);
-            BigInteger currentTextDigest = digest(signedText.Text);
+            var calculatedTextDigestQuery = from b in signedText.Signature.Split(DELIMITER) select (byte)BigInteger.ModPow(BigInteger.Parse(b), key.Exponent, key.Modulus);
+            string calculatedTextDigest = utf8.GetString(calculatedTextDigestQuery.ToArray<Byte>());
+            string currentTextDigest = digest(signedText.Text);
             return calculatedTextDigest == currentTextDigest;
         }
 
-        public BigInteger digest(string text)
+        public string digest(string text)
         {
-            //BigInteger n = new BigInteger(P) * Q;
-            //BigInteger tmp, h = H0, hPrev = H0;
-            //foreach (char c in text)
-            //{
-            //    tmp = h;
-            //    h = BigInteger.ModPow(hPrev + Convert.ToInt32(c), 2, n);
-            //    hPrev = tmp;
-            //}
-            //BigInteger result = h;
-            BigInteger h = H0;
-            BigInteger n = new BigInteger(P) * Q;
-            foreach (char c in text)
-            {
-                h += Convert.ToInt32(c);
-            }
-            BigInteger result = BigInteger.ModPow(h, 2, n);
+            byte[] hashBytes = SHA1.Create().ComputeHash(utf8.GetBytes(text));
+            string result = BitConverter.ToString(hashBytes);
             return result;
         }
     }
@@ -114,9 +110,9 @@ namespace CryptographyTemplate
         public BigInteger N { get; private set; }
         public BigInteger Phi { get; private set; }
 
-        private const int MIN_EXP = 10000;
-        private const int MAX_EXP = 99999;
-        private const int EPSILON = 500;
+        private const int MIN_EXP = 100000;
+        private const int MAX_EXP = 999999;
+        private const int EPSILON = 5000;
 
         private RandomGenerator primesGenerator = new RandomPrimeGenerator(MAX_EXP);
         private RandomGenerator numbersGenerator = new Utils.RandomNumberGenerator();

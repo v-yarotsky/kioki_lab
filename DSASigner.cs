@@ -177,14 +177,15 @@ namespace CryptographyTemplate
 
         public BigInteger digest(string text)
         {
-            BigInteger h, hPrev = 100;
-            foreach (char c in text)
-            {
-                int m = Convert.ToInt32(c);
-                h = BigInteger.ModPow(hPrev + m, 2, Domain.Q);
-                hPrev = h;
-            }
-            return hPrev;
+            //BigInteger h, hPrev = 100;
+            //foreach (char c in text)
+            //{
+            //    int m = Convert.ToInt32(c);
+            //    h = BigInteger.ModPow(hPrev + m, 2, Domain.Q);
+            //    hPrev = h;
+            //}
+            //return hPrev;
+            return text.GetDigest();
         }
 
         public BigInteger decryptedDigest(DSASignedString signedText, SignKey key)

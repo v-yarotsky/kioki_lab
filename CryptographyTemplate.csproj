@@ -60,6 +60,7 @@
     <Compile Include="EncryptionStrategies\RailwayFenceEncryptionStrategy.cs" />
     <Compile Include="Extensions\BigIntegerExtensions.cs" />
     <Compile Include="Extensions\IntegerExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="RabinKeyForm.cs">
       <SubType>Form</SubType>
     </Compile>

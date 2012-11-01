@@ -44,8 +44,13 @@
             this.outputText = new System.Windows.Forms.RichTextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.statusBar = new System.Windows.Forms.StatusStrip();
+            this.lblIntermediateValues = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.moveToInputButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.ioContainer.SuspendLayout();
+            this.statusBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip
@@ -55,6 +60,8 @@
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFileButton,
             this.saveFileButton,
+            this.toolStripSeparator1,
+            this.moveToInputButton,
             this.toolStripSeparator,
             this.algorithmDropdownLabel,
             this.algorithmDrowdown,
@@ -64,7 +71,7 @@
             this.encryptButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(692, 25);
+            this.toolStrip.Size = new System.Drawing.Size(732, 25);
             this.toolStrip.Stretch = true;
             this.toolStrip.TabIndex = 0;
             // 
@@ -110,7 +117,7 @@
             "Метод поворачивающейся решетки",
             "Шифр Вижинера",
             "Криптосистема Рабина",
-            "Цифровая подпись RSA"});
+            "Цифровая подпись DSA"});
             this.algorithmDrowdown.Name = "algorithmDrowdown";
             this.algorithmDrowdown.Size = new System.Drawing.Size(170, 25);
             // 
@@ -160,7 +167,7 @@
             this.ioContainer.RowCount = 1;
             this.ioContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ioContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 341F));
-            this.ioContainer.Size = new System.Drawing.Size(692, 341);
+            this.ioContainer.Size = new System.Drawing.Size(732, 341);
             this.ioContainer.TabIndex = 1;
             // 
             // inputText
@@ -168,8 +175,9 @@
             this.inputText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.inputText.Dock = System.Windows.Forms.DockStyle.Fill;
             this.inputText.Location = new System.Drawing.Point(3, 3);
+            this.inputText.Margin = new System.Windows.Forms.Padding(3, 3, 3, 25);
             this.inputText.Name = "inputText";
-            this.inputText.Size = new System.Drawing.Size(340, 335);
+            this.inputText.Size = new System.Drawing.Size(360, 313);
             this.inputText.TabIndex = 2;
             this.inputText.Text = "";
             // 
@@ -177,9 +185,10 @@
             // 
             this.outputText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.outputText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputText.Location = new System.Drawing.Point(349, 3);
+            this.outputText.Location = new System.Drawing.Point(369, 3);
+            this.outputText.Margin = new System.Windows.Forms.Padding(3, 3, 3, 25);
             this.outputText.Name = "outputText";
-            this.outputText.Size = new System.Drawing.Size(340, 335);
+            this.outputText.Size = new System.Drawing.Size(360, 313);
             this.outputText.TabIndex = 3;
             this.outputText.Text = "";
             // 
@@ -195,11 +204,42 @@
             this.saveFileDialog.FileName = "output";
             this.saveFileDialog.Filter = "Text files (*.txt) | *.txt";
             // 
+            // statusBar
+            // 
+            this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lblIntermediateValues});
+            this.statusBar.Location = new System.Drawing.Point(0, 344);
+            this.statusBar.Name = "statusBar";
+            this.statusBar.Size = new System.Drawing.Size(732, 22);
+            this.statusBar.TabIndex = 2;
+            this.statusBar.Text = "statusStrip1";
+            // 
+            // lblIntermediateValues
+            // 
+            this.lblIntermediateValues.Name = "lblIntermediateValues";
+            this.lblIntermediateValues.Size = new System.Drawing.Size(0, 17);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // moveToInputButton
+            // 
+            this.moveToInputButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.moveToInputButton.Image = ((System.Drawing.Image)(resources.GetObject("moveToInputButton.Image")));
+            this.moveToInputButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.moveToInputButton.Name = "moveToInputButton";
+            this.moveToInputButton.Size = new System.Drawing.Size(23, 22);
+            this.moveToInputButton.Text = "<";
+            this.moveToInputButton.Click += new System.EventHandler(this.moveToInputButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(692, 366);
+            this.ClientSize = new System.Drawing.Size(732, 366);
+            this.Controls.Add(this.statusBar);
             this.Controls.Add(this.ioContainer);
             this.Controls.Add(this.toolStrip);
             this.MinimumSize = new System.Drawing.Size(700, 400);
@@ -209,6 +249,8 @@
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.ioContainer.ResumeLayout(false);
+            this.statusBar.ResumeLayout(false);
+            this.statusBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -231,6 +273,10 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.RichTextBox inputText;
         private System.Windows.Forms.RichTextBox outputText;
+        private System.Windows.Forms.StatusStrip statusBar;
+        private System.Windows.Forms.ToolStripStatusLabel lblIntermediateValues;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton moveToInputButton;
     }
 }
 

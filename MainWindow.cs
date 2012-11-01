@@ -11,7 +11,7 @@ namespace CryptographyTemplate
 {
     public partial class MainWindow : Form
     {
-        public enum Mode { Encrypt, Decrypt };
+        public enum Mode { Encrypt, Decrypt, Sign, CheckSignature };
 
         public MainWindow()
         {
@@ -56,12 +56,19 @@ namespace CryptographyTemplate
                 if (IsSignatureMode())
                 {
                     Signer s = GetSigner();
-                    outputText.Text = s.sign(inputText.Text, signKey).ToString();
+                    if (s != null)
+                    {
+                        outputText.Text = s.sign(inputText.Text, signKey).ToString();
+                        lblIntermediateValues.Text = s.SignIntermediateValues;
+                    }
                 }
                 else
                 {
                     EncryptionStrategy s = GetEncryptionStrategy();
-                    outputText.Text = s.encrypt();
+                    if (s != null)
+                    {
+                        outputText.Text = s.encrypt();
+                    }
                 }
             }
             catch (Exception err)
@@ -112,20 +119,26 @@ namespace CryptographyTemplate
         }
 
         private SignKey signKey;
+        private DomainParameters domain;
+        private DSAForm dsaForm;
 
-        public Signer GetSigner(Mode mode = Mode.Encrypt)
+        public Signer GetSigner(Mode mode = Mode.Sign)
         {
             Signer result = null;
             String input = inputText.Text;
 
             switch (algorithmDrowdown.Text)
             {
-                case "Цифровая подпись RSA":
-                    RSAKeyForm rsaKeyForm = new RSAKeyForm(mode);
-                    if (rsaKeyForm.ShowDialog() == DialogResult.OK)
+                case "Цифровая подпись DSA":
+                    if (dsaForm == null)
                     {
-                        signKey = mode == Mode.Encrypt ? rsaKeyForm.PrivateKey : rsaKeyForm.PublicKey;
-                        result = new RSASigner();
+                        dsaForm = new DSAForm();
+                    }
+                    if (dsaForm.ShowDialog() == DialogResult.OK)
+                    {
+                        signKey = mode == Mode.Sign ? dsaForm.PrivateKey : dsaForm.PublicKey;
+                        domain = dsaForm.Domain;
+                        result = new DSASigner(dsaForm.Domain);
                     }
                     break;
                 default:
@@ -141,20 +154,27 @@ namespace CryptographyTemplate
             {
                 if (IsSignatureMode())
                 {
-                    Signer s = GetSigner(Mode.Decrypt);
-                    if (s.checkSignature(new SignedString(inputText.Text), signKey))
+                    Signer s = GetSigner(Mode.CheckSignature);
+                    if (s != null)
                     {
-                        System.Windows.Forms.MessageBox.Show("Подпись верна");
-                    }
-                    else
-                    {
-                        System.Windows.Forms.MessageBox.Show("Подпись НЕ верна");
+                        if (s.checkSignature(new DSASignedString(inputText.Text), signKey))
+                        {
+                            System.Windows.Forms.MessageBox.Show("Подпись верна");
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("Подпись НЕ верна");
+                        }
+                        lblIntermediateValues.Text = s.CheckSignatureIntermediateValues;
                     }
                 }
                 else
                 {
                     EncryptionStrategy s = GetEncryptionStrategy(Mode.Decrypt);
-                    outputText.Text = s.decrypt();
+                    if (s != null)
+                    {
+                        outputText.Text = s.decrypt();
+                    }
                 }
             }
             catch (Exception err)
@@ -165,7 +185,12 @@ namespace CryptographyTemplate
 
         private bool IsSignatureMode()
         {
-            return algorithmDrowdown.Text == "Цифровая подпись RSA";
+            return algorithmDrowdown.Text == "Цифровая подпись DSA";
+        }
+
+        private void moveToInputButton_Click(object sender, EventArgs e)
+        {
+            inputText.Text = outputText.Text;
         }
     }
 }

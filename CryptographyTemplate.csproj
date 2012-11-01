@@ -47,24 +47,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DSAForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DSAForm.Designer.cs">
+      <DependentUpon>DSAForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DSASigner.cs" />
     <Compile Include="EncryptionStrategies\RabinEncryptionStrategy.cs" />
     <Compile Include="EncryptionStrategies\RotatingGridEncryptionStrategy.cs" />
     <Compile Include="EncryptionStrategies\PassPhraseEncryptionStrategy.cs" />
     <Compile Include="EncryptionStrategies\RailwayFenceEncryptionStrategy.cs" />
     <Compile Include="Extensions\BigIntegerExtensions.cs" />
+    <Compile Include="Extensions\IntegerExtensions.cs" />
     <Compile Include="RabinKeyForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RabinKeyForm.Designer.cs">
       <DependentUpon>RabinKeyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="RSAKeyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RSAKeyForm.Designer.cs">
-      <DependentUpon>RSAKeyForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RSASigner.cs" />
     <Compile Include="Utils\RandomGenerator.cs" />
     <Compile Include="Utils\RandomNumberGenerator.cs" />
     <Compile Include="Utils\RandomPrimeGenerator.cs" />
@@ -84,6 +85,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DSAForm.resx">
+      <DependentUpon>DSAForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GridForm.resx">
       <DependentUpon>GridForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,9 +105,6 @@
     </Compile>
     <EmbeddedResource Include="RabinKeyForm.resx">
       <DependentUpon>RabinKeyForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RSAKeyForm.resx">
-      <DependentUpon>RSAKeyForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

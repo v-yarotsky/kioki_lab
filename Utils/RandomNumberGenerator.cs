@@ -36,7 +36,7 @@ namespace CryptographyTemplate.Utils
         public BigInteger Next(BigInteger min, BigInteger max, Predicate<BigInteger> p)
         {
             BigInteger result;
-            do { result = rand.Next() + min; } while (result > max || !p(result));
+            do { result = rand.Next((int)min, (int)max); } while (!p(result));
             return result;
         }
     }

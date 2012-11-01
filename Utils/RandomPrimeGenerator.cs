@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Numerics;
 using System.Collections;
+using CryptographyTemplate.Extensions;
 
 namespace CryptographyTemplate.Utils
 {
@@ -12,7 +13,7 @@ namespace CryptographyTemplate.Utils
         private List<BigInteger> primes;
         private Random rand;
 
-        public RandomPrimeGenerator(int max)
+        public RandomPrimeGenerator(int max = 999999)
         {
             this.primes = GeneratePrimes(max);
             this.rand = new Random();
@@ -69,7 +70,7 @@ namespace CryptographyTemplate.Utils
 
         public BigInteger Next(BigInteger min, BigInteger max, Predicate<BigInteger> p)
         {
-            int minIdx = primes.FindIndex(n => n >= min);
+            int minIdx = primes.FindIndex(n => n.CompareTo(min) >= 0);
             int maxIdx = primes.FindLastIndex(n => n <= max);
             int idx;
             do { idx = rand.Next(minIdx, maxIdx); } while (!p(primes[idx]));

@@ -32,6 +32,8 @@
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.openFileButton = new System.Windows.Forms.ToolStripButton();
             this.saveFileButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.moveToInputButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.algorithmDropdownLabel = new System.Windows.Forms.ToolStripLabel();
             this.algorithmDrowdown = new System.Windows.Forms.ToolStripComboBox();
@@ -46,8 +48,6 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.lblIntermediateValues = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.moveToInputButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             this.ioContainer.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -94,6 +94,21 @@
             this.saveFileButton.Size = new System.Drawing.Size(66, 22);
             this.saveFileButton.Text = "Сохранить";
             this.saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // moveToInputButton
+            // 
+            this.moveToInputButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.moveToInputButton.Image = ((System.Drawing.Image)(resources.GetObject("moveToInputButton.Image")));
+            this.moveToInputButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.moveToInputButton.Name = "moveToInputButton";
+            this.moveToInputButton.Size = new System.Drawing.Size(23, 22);
+            this.moveToInputButton.Text = "<";
+            this.moveToInputButton.Click += new System.EventHandler(this.moveToInputButton_Click);
             // 
             // toolStripSeparator
             // 
@@ -218,21 +233,6 @@
             // 
             this.lblIntermediateValues.Name = "lblIntermediateValues";
             this.lblIntermediateValues.Size = new System.Drawing.Size(0, 17);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // moveToInputButton
-            // 
-            this.moveToInputButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.moveToInputButton.Image = ((System.Drawing.Image)(resources.GetObject("moveToInputButton.Image")));
-            this.moveToInputButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.moveToInputButton.Name = "moveToInputButton";
-            this.moveToInputButton.Size = new System.Drawing.Size(23, 22);
-            this.moveToInputButton.Text = "<";
-            this.moveToInputButton.Click += new System.EventHandler(this.moveToInputButton_Click);
             // 
             // MainWindow
             // 

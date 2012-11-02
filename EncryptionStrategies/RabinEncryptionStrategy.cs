@@ -11,6 +11,47 @@ namespace CryptographyTemplate.EncryptionStrategies
 {
     public class RabinEncryptionStrategy : EncryptionStrategy
     {
+        public struct ExtendedEuclideanResult
+        {
+            public BigInteger x;
+            public BigInteger y;
+            public BigInteger gcd;
+        }
+
+        public static ExtendedEuclideanResult ExtendedEuclide(BigInteger a, BigInteger b)
+        {
+            BigInteger x = 1;
+            BigInteger d = a;
+            BigInteger v1 = 0;
+            BigInteger v3 = b;
+
+            while (v3 > 0)
+            {
+                BigInteger q0 = d / v3;
+                BigInteger q1 = d % v3;
+                BigInteger tmp = v1 * q0;
+                BigInteger tn = x - tmp;
+                x = v1;
+                v1 = tn;
+
+                d = v3;
+                v3 = q1;
+            }
+
+            BigInteger tmp2 = x * (a);
+            tmp2 = d - (tmp2);
+            BigInteger res = tmp2 / (b);
+
+            ExtendedEuclideanResult result = new ExtendedEuclideanResult()
+            {
+                x = x,
+                y = res,
+                gcd = d
+            };
+
+            return result;
+        }
+
         public struct RabinKey
         {
             public BigInteger N { get; private set; }
@@ -32,7 +73,6 @@ namespace CryptographyTemplate.EncryptionStrategies
         private string input;
         private RabinKey key;
         private const char DELIMITER = ':';
-        private const string TOKEN = "xRABIN_TOKENx";
         private UTF8Encoding encoder;
 
         public RabinEncryptionStrategy(string input, RabinKey key)
@@ -48,49 +88,53 @@ namespace CryptographyTemplate.EncryptionStrategies
 
         public string encrypt()
         {
-            byte[] bytes = encoder.GetBytes(TOKEN + input);
-            BigInteger[] resultNumbers = bytes.Select(c => BigInteger.ModPow(c, 2, key.N)).ToArray<BigInteger>();
+            byte[] bytes = encoder.GetBytes(input);
+            BigInteger[] resultNumbers = bytes.Select(c => encryptOne(c)).ToArray<BigInteger>();
             return String.Join<BigInteger>(DELIMITER.ToString(), resultNumbers);
+        }
+
+        private BigInteger encryptOne(byte b)
+        {
+            BigInteger m = 2 * b + 1;
+            BigInteger n = key.N;
+            if (m.L(n) == 1)
+            {
+                if (4 * m < n)
+                    return BigInteger.ModPow(4 * m, 2, n);
+                else
+                    throw new ArgumentOutOfRangeException("Невозможно зашифровать данный текст");
+            }
+            else
+            {
+                if (2 * m < n)
+                    return BigInteger.ModPow(2 * m, 2, n);
+                else
+                    throw new ArgumentOutOfRangeException("Невозможно зашифровать данный текст");
+            }
         }
 
         public string decrypt()
         {
-            Extensions.BigIntegerExtensions.ExtendedEuclideanResult r = key.P.ExtendedEuclide(key.Q);
-            BigInteger Yp = r.x;
-            BigInteger Yq = r.y;
             BigInteger[] numbers = input.Split(DELIMITER).Select(n => BigInteger.Parse(n)).ToArray<BigInteger>();
-            BigInteger Mq;
-            BigInteger Mp;
-            List<BigInteger> r1 = new List<BigInteger>();
-            List<BigInteger> r2 = new List<BigInteger>();
-            List<BigInteger> r3 = new List<BigInteger>();
-            List<BigInteger> r4 = new List<BigInteger>();
-            BigInteger N = key.P * key.Q;
+            List<BigInteger> charCodes = new List<BigInteger>();
+            BigInteger p = key.P, q = key.Q;
+            BigInteger N = p * q;
             for (int i = 0; i < numbers.Length; i++)
             {
-                r1.Add((Yp * key.P + Yq * key.Q) % N);
+                BigInteger d = ((p - 1) * (q - 1) / 4 + 1) / 2;
+                BigInteger L = BigInteger.ModPow(numbers[i], d, N);
+                BigInteger[] roots = 
+                { 
+                    (L / 4 - 1) / 2,
+                    ((N - L) / 4 - 1) / 2,
+                    (L / 2 - 1) / 2,
+                    ((N - L) / 2 - 1) / 2
+                };
+                charCodes.Add(roots[(int)(L % 4)]);
             }
-
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                r2.Add(key.N - r1[i]);
-            }
-
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                r3.Add((Yp * key.P - Yq * key.Q) % N);
-            }
-
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                r4.Add(key.N - r3[i]);
-            }
-
-            String s1 = new String(r1.Select(n => System.Convert.ToChar((int)n)).ToArray<char>());
-            String s2 = new String(r2.Select(n => System.Convert.ToChar((int)n)).ToArray<char>());
-            String s3 = new String(r3.Select(n => System.Convert.ToChar((int)n)).ToArray<char>());
-            String s4 = new String(r4.Select(n => System.Convert.ToChar((int)n)).ToArray<char>());
-            return "";
+            Encoding utf = new UTF8Encoding();
+            string result = utf.GetString((from c in charCodes select (byte)(c)).ToArray<byte>());
+            return result;
         }
 
         public class RabinKeyGenerator
@@ -109,8 +153,9 @@ namespace CryptographyTemplate.EncryptionStrategies
 
             public void GenerateKeys()
             {
-                BigInteger p = primes.Next(x => x % 4 == 3);
-                BigInteger q = primes.Next(x => (x % 4 == 3 && x != p));
+                BigInteger p = primes.Next(x => x % 8 == 3);
+                BigInteger q = primes.Next(x => x % 8 == 7 && x != p);
+                
                 BigInteger n = p * q;
 
                 PublicKey = new RabinKey(n);

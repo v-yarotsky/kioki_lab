@@ -39,7 +39,7 @@ namespace CryptographyTemplate
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            RabinEncryptionStrategy.RabinKeyGenerator generator = new RabinEncryptionStrategy.RabinKeyGenerator(99999);
+            RabinEncryptionStrategy.RabinKeyGenerator generator = new RabinEncryptionStrategy.RabinKeyGenerator(999999);
             generator.GenerateKeys();
             tbP.Text = generator.PrivateKey.P.ToString();
             tbQ.Text = generator.PrivateKey.Q.ToString();

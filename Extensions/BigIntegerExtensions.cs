@@ -41,6 +41,44 @@ namespace CryptographyTemplate.Extensions
             return (curr_x.Sign < 0 ? curr_x + b : curr_x);
         }
 
+        public static BigInteger ModSqrt(this BigInteger a, BigInteger b)
+        {
+            BigInteger result = BigInteger.ModPow(a, (b + 1) / 4, b);
+            return result;
+        }
+
+        public static int L(this BigInteger a, BigInteger p)
+        {
+            if (p < 2)  // prime test is expensive.
+                throw new ArgumentOutOfRangeException("p", "p must not be < 2");
+            if (a == 0)
+            {
+                return 0;
+            }
+            if (a == 1)
+            {
+                return 1;
+            }
+            int result;
+            if (a % 2 == 0)
+            {
+                result = (a / 2).L(p);
+                if (((p * p - 1) & 8) != 0) // instead of dividing by 8, shift the mask bit
+                {
+                    result = -result;
+                }
+            }
+            else
+            {
+                result = (p % a).L(a);
+                if (((a - 1) * (p - 1) & 4) != 0) // instead of dividing by 4, shift the mask bit
+                {
+                    result = -result;
+                }
+            }
+            return result;
+        } 
+
         public static bool IsProbablePrime(this BigInteger source, int certainty)
         {
             if (source == 2 || source == 3)
@@ -91,47 +129,6 @@ namespace CryptographyTemplate.Extensions
             }
 
             return true;
-        }
-
-        public struct ExtendedEuclideanResult
-        {
-            public BigInteger x;
-            public BigInteger y;
-            public BigInteger gcd;
-        }
-
-        public static ExtendedEuclideanResult ExtendedEuclide(this BigInteger a, BigInteger b)
-        {
-            BigInteger x = 1;
-            BigInteger d = a;
-            BigInteger v1 = 0;
-            BigInteger v3 = b;
-
-            while (v3 > 0)
-            {
-                BigInteger q0 = d / v3;
-                BigInteger q1 = d % v3;
-                BigInteger tmp = v1 * q0;
-                BigInteger tn = x - tmp;
-                x = v1;
-                v1 = tn;
-
-                d = v3;
-                v3 = q1;
-            }
-
-            BigInteger tmp2 = x * (a);
-            tmp2 = d - (tmp2);
-            BigInteger res = tmp2 / (b);
-
-            ExtendedEuclideanResult result = new ExtendedEuclideanResult()
-            {
-                x = x,
-                y = res,
-                gcd = d
-            };
-
-            return result;
         }
     }
 }

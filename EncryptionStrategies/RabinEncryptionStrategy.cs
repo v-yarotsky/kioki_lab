@@ -119,9 +119,9 @@ namespace CryptographyTemplate.EncryptionStrategies
             List<BigInteger> charCodes = new List<BigInteger>();
             BigInteger p = key.P, q = key.Q;
             BigInteger N = p * q;
+            BigInteger d = ((p - 1) * (q - 1) / 4 + 1) / 2;
             for (int i = 0; i < numbers.Length; i++)
             {
-                BigInteger d = ((p - 1) * (q - 1) / 4 + 1) / 2;
                 BigInteger L = BigInteger.ModPow(numbers[i], d, N);
                 BigInteger[] roots = 
                 { 

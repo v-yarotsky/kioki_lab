@@ -192,5 +192,11 @@ namespace CryptographyTemplate
         {
             inputText.Text = outputText.Text;
         }
+
+        private void btnSchnorr_Click(object sender, EventArgs e)
+        {
+            SchnorrForm f = new SchnorrForm();
+            f.ShowDialog();
+        }
     }
 }

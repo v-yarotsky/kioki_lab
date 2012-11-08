@@ -48,6 +48,8 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.lblIntermediateValues = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnSchnorr = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip.SuspendLayout();
             this.ioContainer.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -62,6 +64,8 @@
             this.saveFileButton,
             this.toolStripSeparator1,
             this.moveToInputButton,
+            this.toolStripSeparator2,
+            this.btnSchnorr,
             this.toolStripSeparator,
             this.algorithmDropdownLabel,
             this.algorithmDrowdown,
@@ -71,7 +75,7 @@
             this.encryptButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(732, 25);
+            this.toolStrip.Size = new System.Drawing.Size(762, 25);
             this.toolStrip.Stretch = true;
             this.toolStrip.TabIndex = 0;
             // 
@@ -165,7 +169,7 @@
             this.encryptButton.Image = ((System.Drawing.Image)(resources.GetObject("encryptButton.Image")));
             this.encryptButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.encryptButton.Name = "encryptButton";
-            this.encryptButton.Size = new System.Drawing.Size(81, 22);
+            this.encryptButton.Size = new System.Drawing.Size(81, 17);
             this.encryptButton.Text = "Зашифровать";
             this.encryptButton.Click += new System.EventHandler(this.encryptButton_Click);
             // 
@@ -182,7 +186,7 @@
             this.ioContainer.RowCount = 1;
             this.ioContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.ioContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 341F));
-            this.ioContainer.Size = new System.Drawing.Size(732, 341);
+            this.ioContainer.Size = new System.Drawing.Size(762, 341);
             this.ioContainer.TabIndex = 1;
             // 
             // inputText
@@ -192,7 +196,7 @@
             this.inputText.Location = new System.Drawing.Point(3, 3);
             this.inputText.Margin = new System.Windows.Forms.Padding(3, 3, 3, 25);
             this.inputText.Name = "inputText";
-            this.inputText.Size = new System.Drawing.Size(360, 313);
+            this.inputText.Size = new System.Drawing.Size(375, 313);
             this.inputText.TabIndex = 2;
             this.inputText.Text = "";
             // 
@@ -200,10 +204,10 @@
             // 
             this.outputText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.outputText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.outputText.Location = new System.Drawing.Point(369, 3);
+            this.outputText.Location = new System.Drawing.Point(384, 3);
             this.outputText.Margin = new System.Windows.Forms.Padding(3, 3, 3, 25);
             this.outputText.Name = "outputText";
-            this.outputText.Size = new System.Drawing.Size(360, 313);
+            this.outputText.Size = new System.Drawing.Size(375, 313);
             this.outputText.TabIndex = 3;
             this.outputText.Text = "";
             // 
@@ -225,7 +229,7 @@
             this.lblIntermediateValues});
             this.statusBar.Location = new System.Drawing.Point(0, 344);
             this.statusBar.Name = "statusBar";
-            this.statusBar.Size = new System.Drawing.Size(732, 22);
+            this.statusBar.Size = new System.Drawing.Size(762, 22);
             this.statusBar.TabIndex = 2;
             this.statusBar.Text = "statusStrip1";
             // 
@@ -234,15 +238,30 @@
             this.lblIntermediateValues.Name = "lblIntermediateValues";
             this.lblIntermediateValues.Size = new System.Drawing.Size(0, 17);
             // 
+            // btnSchnorr
+            // 
+            this.btnSchnorr.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSchnorr.Image = ((System.Drawing.Image)(resources.GetObject("btnSchnorr.Image")));
+            this.btnSchnorr.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSchnorr.Name = "btnSchnorr";
+            this.btnSchnorr.Size = new System.Drawing.Size(45, 22);
+            this.btnSchnorr.Text = "Шнорр";
+            this.btnSchnorr.Click += new System.EventHandler(this.btnSchnorr_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(732, 366);
+            this.ClientSize = new System.Drawing.Size(762, 366);
             this.Controls.Add(this.statusBar);
             this.Controls.Add(this.ioContainer);
             this.Controls.Add(this.toolStrip);
-            this.MinimumSize = new System.Drawing.Size(700, 400);
+            this.MinimumSize = new System.Drawing.Size(770, 400);
             this.Name = "MainWindow";
             this.Text = "Cryptography Yarotsky V.";
             this.Shown += new System.EventHandler(this.MainWindow_Shown);
@@ -277,6 +296,8 @@
         private System.Windows.Forms.ToolStripStatusLabel lblIntermediateValues;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton moveToInputButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton btnSchnorr;
     }
 }
 

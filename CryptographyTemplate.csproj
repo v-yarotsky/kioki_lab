@@ -67,6 +67,13 @@
     <Compile Include="RabinKeyForm.Designer.cs">
       <DependentUpon>RabinKeyForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Schnorr.cs" />
+    <Compile Include="SchnorrForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SchnorrForm.Designer.cs">
+      <DependentUpon>SchnorrForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\RandomGenerator.cs" />
     <Compile Include="Utils\RandomNumberGenerator.cs" />
     <Compile Include="Utils\RandomPrimeGenerator.cs" />
@@ -106,6 +113,9 @@
     </Compile>
     <EmbeddedResource Include="RabinKeyForm.resx">
       <DependentUpon>RabinKeyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SchnorrForm.resx">
+      <DependentUpon>SchnorrForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -32,16 +32,17 @@ namespace CryptographyTemplate
 
         private void btnGenerateSchnorr_Click(object sender, EventArgs e)
         {
+            
             domain = DomainParameters.GenerateDomainParameters(100000, 999999);
             schnorr = new Schnorr(domain);
-            prover = new SchorrProver(schnorr);
-            verifier = new SchorrVerifier(schnorr);
 
             tbP.Text = domain.P.ToString();
             tbQ.Text = domain.Q.ToString();
             tbH.Text = domain.H.ToString();
             tbG.Text = domain.G.ToString();
             tbT.Text = schnorr.T.ToString();
+
+            ResetForm();
         }
 
         private void btnGenerateKeys_Click(object sender, EventArgs e)
@@ -91,6 +92,27 @@ namespace CryptographyTemplate
             BigInteger ch = BigInteger.Parse(tbE.Text);
             prover.Response(ch);
             tbY.Text = prover.Y.ToString();
+        }
+
+        private void tbT_TextChanged(object sender, EventArgs e)
+        {
+            ResetForm();
+        }
+
+        private void ResetForm()
+        {
+            schnorr.T = BigInteger.Parse(tbT.Text);
+
+            prover = new SchorrProver(schnorr);
+            verifier = new SchorrVerifier(schnorr);
+            
+            tbS.Text = "";
+            tbA.Text = "";
+            tbR.Text = "";
+            tbX.Text = "";
+            tbE.Text = "";
+            tbY.Text = "";
+            tbZ.Text = "";
         }
     }
 }

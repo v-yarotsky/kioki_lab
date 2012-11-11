@@ -65,6 +65,7 @@
             // 
             this.tbP.Location = new System.Drawing.Point(35, 12);
             this.tbP.Name = "tbP";
+            this.tbP.ReadOnly = true;
             this.tbP.Size = new System.Drawing.Size(100, 20);
             this.tbP.TabIndex = 0;
             // 
@@ -72,6 +73,7 @@
             // 
             this.tbQ.Location = new System.Drawing.Point(35, 39);
             this.tbQ.Name = "tbQ";
+            this.tbQ.ReadOnly = true;
             this.tbQ.Size = new System.Drawing.Size(100, 20);
             this.tbQ.TabIndex = 1;
             // 
@@ -79,6 +81,7 @@
             // 
             this.tbH.Location = new System.Drawing.Point(35, 66);
             this.tbH.Name = "tbH";
+            this.tbH.ReadOnly = true;
             this.tbH.Size = new System.Drawing.Size(100, 20);
             this.tbH.TabIndex = 2;
             // 
@@ -86,6 +89,7 @@
             // 
             this.tbG.Location = new System.Drawing.Point(35, 93);
             this.tbG.Name = "tbG";
+            this.tbG.ReadOnly = true;
             this.tbG.Size = new System.Drawing.Size(100, 20);
             this.tbG.TabIndex = 3;
             // 
@@ -95,6 +99,7 @@
             this.tbT.Name = "tbT";
             this.tbT.Size = new System.Drawing.Size(100, 20);
             this.tbT.TabIndex = 4;
+            this.tbT.TextChanged += new System.EventHandler(this.tbT_TextChanged);
             // 
             // tbS
             // 
@@ -319,7 +324,7 @@
             this.btnRespond.Name = "btnRespond";
             this.btnRespond.Size = new System.Drawing.Size(99, 23);
             this.btnRespond.TabIndex = 30;
-            this.btnRespond.Text = "Сгенерировать";
+            this.btnRespond.Text = "Вычислить";
             this.btnRespond.UseVisualStyleBackColor = true;
             this.btnRespond.Click += new System.EventHandler(this.btnRespond_Click);
             // 

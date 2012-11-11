@@ -25,7 +25,7 @@ namespace CryptographyTemplate
 
         public BigInteger GenerateT()
         {
-            BigInteger result = numbers.Next(T_MIN, Domain.Q - 1);
+            BigInteger result = numbers.Next(T_MIN, BigInteger.Min(Domain.Q - 1, 100000));
             return result;
         }
     }
@@ -62,7 +62,7 @@ namespace CryptographyTemplate
 
         public BigInteger Response(BigInteger challenge)
         {
-            Y = (Secret * challenge + R) % Domain.P;
+            Y = (Secret * challenge + R) % Domain.Q;
             return Y;
         }
     }
@@ -70,7 +70,7 @@ namespace CryptographyTemplate
     public class SchorrVerifier
     {
         public DomainParameters Domain { get; private set; }
-        public BigInteger T { get; private set; }
+        public BigInteger T { get; set; }
         public BigInteger E { get; private set; }
         public BigInteger X { get; private set; }
         public BigInteger Z { get; private set; }

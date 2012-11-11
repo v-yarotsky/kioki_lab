@@ -87,8 +87,7 @@ namespace CryptographyTemplate
         public BigInteger Challenge(BigInteger x)
         {
             X = x;
-            BigInteger exp = numbers.Next(0, (int)T, n => BigInteger.Pow(2, (int)n) < Domain.Q);
-            E = BigInteger.Pow(2, (int)exp);
+            E = numbers.Next(1, BigInteger.Pow(2, (int)T));
             return E;
         }
 

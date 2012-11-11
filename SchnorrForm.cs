@@ -32,7 +32,7 @@ namespace CryptographyTemplate
 
         private void btnGenerateSchnorr_Click(object sender, EventArgs e)
         {
-            domain = DomainParameters.GenerateDomainParameters();
+            domain = DomainParameters.GenerateDomainParameters(100000, 999999);
             schnorr = new Schnorr(domain);
             prover = new SchorrProver(schnorr);
             verifier = new SchorrVerifier(schnorr);

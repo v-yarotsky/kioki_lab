@@ -199,7 +199,7 @@
             // 
             this.sbMaxQ.Location = new System.Drawing.Point(245, 29);
             this.sbMaxQ.Maximum = new decimal(new int[] {
-            99999,
+            9999999,
             0,
             0,
             0});
@@ -221,7 +221,7 @@
             // 
             this.sbMinQ.Location = new System.Drawing.Point(50, 29);
             this.sbMinQ.Maximum = new decimal(new int[] {
-            99998,
+            9999998,
             0,
             0,
             0});

@@ -35,8 +35,19 @@ namespace CryptographyTemplate.Utils
 
         public BigInteger Next(BigInteger min, BigInteger max, Predicate<BigInteger> p)
         {
+            if (min > max)
+            {
+                throw new ArgumentException("Min > Max");
+            }
+
             BigInteger result;
-            do { result = rand.Next((int)min, (int)max); } while (!p(result));
+            int len = max.ToByteArray().Length;
+            byte[] randBytes = new byte[len];
+            do
+            {
+                rand.NextBytes(randBytes);
+                result = new BigInteger(randBytes);
+            } while (result < min || result > max || !p(result));
             return result;
         }
     }

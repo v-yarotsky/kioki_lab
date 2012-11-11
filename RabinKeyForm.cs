@@ -13,13 +13,13 @@ namespace CryptographyTemplate
 {
     public partial class RabinKeyForm : Form
     {
-        private MainWindow.Mode mode;
+        public MainWindow.Mode Mode { get; set; }
         public RabinEncryptionStrategy.RabinKey PublicKey { get; private set; }
         public RabinEncryptionStrategy.RabinKey PrivateKey { get; private set; }
 
         public RabinKeyForm(MainWindow.Mode mode = MainWindow.Mode.Encrypt)
         {
-            this.mode = mode;
+            this.Mode = mode;
             InitializeComponent();
         }
 
@@ -31,10 +31,7 @@ namespace CryptographyTemplate
 
         private void RabinKeyForm_Load(object sender, EventArgs e)
         {
-            if (mode == MainWindow.Mode.Decrypt)
-            {
-                DisablePublicKeyControls();
-            }
+            
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -48,15 +45,23 @@ namespace CryptographyTemplate
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (mode == MainWindow.Mode.Encrypt && tbN.Text != "")
+            if (Mode == MainWindow.Mode.Encrypt && tbN.Text != "")
             {
                 PublicKey = new RabinEncryptionStrategy.RabinKey(BigInteger.Parse(tbN.Text));
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
-            else if (mode == MainWindow.Mode.Decrypt && tbP.Text != "" && tbQ.Text != "")
+            else if (Mode == MainWindow.Mode.Decrypt && tbP.Text != "" && tbQ.Text != "")
             {
                 PrivateKey = new RabinEncryptionStrategy.RabinKey(BigInteger.Parse(tbP.Text), BigInteger.Parse(tbQ.Text));
                 DialogResult = System.Windows.Forms.DialogResult.OK;
+            }
+        }
+
+        private void RabinKeyForm_Shown(object sender, EventArgs e)
+        {
+            if (Mode == MainWindow.Mode.Decrypt)
+            {
+                DisablePublicKeyControls();
             }
         }
     }

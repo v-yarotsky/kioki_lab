@@ -67,7 +67,6 @@ namespace CryptographyTemplate
         public void GenerateKeys()
         {
             BigInteger x, y;
-            var rand = new System.Security.Cryptography.RNGCryptoServiceProvider();
             x = numbers.Next(0, Domain.Q);
             y = BigInteger.ModPow(Domain.G, x, Domain.P);
 
@@ -88,6 +87,8 @@ namespace CryptographyTemplate
         public BigInteger Q { get; private set; }
         public BigInteger G { get; private set; }
         public BigInteger H { get; private set; }
+
+        private static RandomPrimeGenerator primes;
 
         public DomainParameters(BigInteger p, BigInteger q, BigInteger g)
             : this()
@@ -110,7 +111,8 @@ namespace CryptographyTemplate
 
         public static DomainParameters GenerateDomainParameters(int minQ = 10000, int maxQ = 99999)
         {
-            RandomPrimeGenerator primes = new RandomPrimeGenerator();
+            if (primes == null)
+                primes = new RandomPrimeGenerator();
             RandomGenerator numbers = new RandomNumberGenerator();
 
             BigInteger q, p, h, g;
@@ -124,7 +126,7 @@ namespace CryptographyTemplate
                 p = q * i + 1;
                 i++;
                 tries++;
-                if (tries > 50) { i = 0;  tries = 0; q = primes.Next(minQ, maxQ); }
+                if (tries > 500) { i = 0;  tries = 0; q = primes.Next(minQ, maxQ); }
             } while (!p.IsProbablePrime(1));
             h = numbers.Next(1, p - 1);
             g = BigInteger.ModPow(h, (p - 1) / q, p);
@@ -194,7 +196,6 @@ namespace CryptographyTemplate
             BigInteger d = digest(signedText.Text);
             BigInteger u1 = (d * w) % Domain.Q;
             BigInteger u2 = (signedText.R * w) % Domain.Q;
-            //BigInteger v = ((BigInteger.Pow(Domain.G, (int)u1) * BigInteger.Pow(key.Value, (int)u2)) % Domain.P) % Domain.Q;
             BigInteger v = ((BigInteger.ModPow(Domain.G, u1, Domain.P) * BigInteger.ModPow(key.Value, u2, Domain.P)) % Domain.P) % Domain.Q;
             CheckSignatureIntermediateValues = String.Format("W: {0:D}, h(M'): {1:D}, u1: {2:D}, u2: {3:D}, V: {4:D}, R: {5:D}, S: {6:D}, Y: {7:D}", w, d, u1, u2, v, signedText.R, signedText.S, key.Value);
             return v;

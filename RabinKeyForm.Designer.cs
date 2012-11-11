@@ -125,6 +125,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Ключи";
             this.Load += new System.EventHandler(this.RabinKeyForm_Load);
+            this.Shown += new System.EventHandler(this.RabinKeyForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

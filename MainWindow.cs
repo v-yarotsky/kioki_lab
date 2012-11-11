@@ -77,6 +77,8 @@ namespace CryptographyTemplate
             }
         }
 
+        RabinKeyForm rabinKeyForm;
+
         private EncryptionStrategy GetEncryptionStrategy(Mode mode = Mode.Encrypt)
         {
             EncryptionStrategy result = null;
@@ -106,10 +108,14 @@ namespace CryptographyTemplate
                 case "Шифр Вижинера": 
                     result = new EncryptionStrategies.VigenereEncryptionStrategy(input, keyInput.Text); break;
                 case "Криптосистема Рабина":
-                    RabinKeyForm keyForm = new RabinKeyForm(mode);
-                    if (keyForm.ShowDialog() == DialogResult.OK)
+                    if (rabinKeyForm == null)
                     {
-                        result = new EncryptionStrategies.RabinEncryptionStrategy(input, mode == Mode.Encrypt ? keyForm.PublicKey : keyForm.PrivateKey);
+                        rabinKeyForm = new RabinKeyForm(mode);
+                    }
+                    rabinKeyForm.Mode = mode;
+                    if (rabinKeyForm.ShowDialog() == DialogResult.OK)
+                    {
+                        result = new EncryptionStrategies.RabinEncryptionStrategy(input, mode == Mode.Encrypt ? rabinKeyForm.PublicKey : rabinKeyForm.PrivateKey);
                     } break;
                 default:
                     throw new ArgumentException("Выберите метод шифрования");

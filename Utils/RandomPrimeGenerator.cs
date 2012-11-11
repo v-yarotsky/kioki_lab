@@ -13,7 +13,7 @@ namespace CryptographyTemplate.Utils
         private List<BigInteger> primes;
         private Random rand;
 
-        public RandomPrimeGenerator(int max = 999999)
+        public RandomPrimeGenerator(int max = 9999999)
         {
             this.primes = GeneratePrimes(max);
             this.rand = new Random();

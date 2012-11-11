@@ -34,6 +34,8 @@
             this.saveFileButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.moveToInputButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSchnorr = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.algorithmDropdownLabel = new System.Windows.Forms.ToolStripLabel();
             this.algorithmDrowdown = new System.Windows.Forms.ToolStripComboBox();
@@ -48,8 +50,6 @@
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.statusBar = new System.Windows.Forms.StatusStrip();
             this.lblIntermediateValues = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnSchnorr = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip.SuspendLayout();
             this.ioContainer.SuspendLayout();
             this.statusBar.SuspendLayout();
@@ -114,6 +114,21 @@
             this.moveToInputButton.Text = "<";
             this.moveToInputButton.Click += new System.EventHandler(this.moveToInputButton_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnSchnorr
+            // 
+            this.btnSchnorr.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnSchnorr.Image = ((System.Drawing.Image)(resources.GetObject("btnSchnorr.Image")));
+            this.btnSchnorr.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSchnorr.Name = "btnSchnorr";
+            this.btnSchnorr.Size = new System.Drawing.Size(45, 22);
+            this.btnSchnorr.Text = "Шнорр";
+            this.btnSchnorr.Click += new System.EventHandler(this.btnSchnorr_Click);
+            // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
@@ -169,7 +184,7 @@
             this.encryptButton.Image = ((System.Drawing.Image)(resources.GetObject("encryptButton.Image")));
             this.encryptButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.encryptButton.Name = "encryptButton";
-            this.encryptButton.Size = new System.Drawing.Size(81, 17);
+            this.encryptButton.Size = new System.Drawing.Size(81, 22);
             this.encryptButton.Text = "Зашифровать";
             this.encryptButton.Click += new System.EventHandler(this.encryptButton_Click);
             // 
@@ -237,21 +252,6 @@
             // 
             this.lblIntermediateValues.Name = "lblIntermediateValues";
             this.lblIntermediateValues.Size = new System.Drawing.Size(0, 17);
-            // 
-            // btnSchnorr
-            // 
-            this.btnSchnorr.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.btnSchnorr.Image = ((System.Drawing.Image)(resources.GetObject("btnSchnorr.Image")));
-            this.btnSchnorr.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSchnorr.Name = "btnSchnorr";
-            this.btnSchnorr.Size = new System.Drawing.Size(45, 22);
-            this.btnSchnorr.Text = "Шнорр";
-            this.btnSchnorr.Click += new System.EventHandler(this.btnSchnorr_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // MainWindow
             // 

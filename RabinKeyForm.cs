@@ -29,6 +29,12 @@ namespace CryptographyTemplate
             tbN.Enabled = false;
         }
 
+        private void EnablePublicKeyControls()
+        {
+            btnGenerate.Enabled = true;
+            tbN.Enabled = true;
+        }
+
         private void RabinKeyForm_Load(object sender, EventArgs e)
         {
             
@@ -62,6 +68,10 @@ namespace CryptographyTemplate
             if (Mode == MainWindow.Mode.Decrypt)
             {
                 DisablePublicKeyControls();
+            }
+            else if (Mode == MainWindow.Mode.Encrypt)
+            {
+                EnablePublicKeyControls();
             }
         }
     }

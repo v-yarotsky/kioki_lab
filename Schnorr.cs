@@ -32,8 +32,8 @@ namespace CryptographyTemplate
 
     public class SchorrProver
     {
-        public BigInteger Secret { get; private set; }
-        public BigInteger PublicKey { get; private set; }
+        public BigInteger Secret { get; set; }
+        public BigInteger PublicKey { get; set; }
         public DomainParameters Domain { get; private set; }
         public BigInteger R { get; private set; }
         public BigInteger X { get; private set; }
@@ -50,7 +50,8 @@ namespace CryptographyTemplate
         public void GenerateKeys()
         {
             Secret = numbers.Next(1, Domain.Q - 1);
-            PublicKey = BigInteger.ModPow(Domain.G.ModInverse(Domain.P), Secret, Domain.P);
+            BigInteger inverse = Domain.G.ModInverse(Domain.P);
+            PublicKey = BigInteger.ModPow(inverse, Secret, Domain.P);
         }
 
         public BigInteger Call()
@@ -72,7 +73,7 @@ namespace CryptographyTemplate
         public DomainParameters Domain { get; private set; }
         public BigInteger T { get; set; }
         public BigInteger E { get; private set; }
-        public BigInteger X { get; private set; }
+        public BigInteger X { get; set; }
         public BigInteger Z { get; private set; }
 
         private RandomGenerator numbers;
@@ -84,9 +85,8 @@ namespace CryptographyTemplate
             numbers = new RandomNumberGenerator();
         }
 
-        public BigInteger Challenge(BigInteger x)
+        public BigInteger Challenge()
         {
-            X = x;
             E = numbers.Next(1, BigInteger.Pow(2, (int)T));
             return E;
         }

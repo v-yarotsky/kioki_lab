@@ -61,16 +61,18 @@ namespace CryptographyTemplate
 
         private void btnGenerateChallenge_Click(object sender, EventArgs e)
         {
-            BigInteger c = BigInteger.Parse(tbX.Text);
-            challenge = verifier.Challenge(c);
+            challenge = verifier.Challenge();
             tbE.Text = challenge.ToString();
         }
 
         private void btnVerify_Click(object sender, EventArgs e)
         {
+            BigInteger x = BigInteger.Parse(tbX.Text);
             BigInteger res = BigInteger.Parse(tbY.Text);
             BigInteger pub = BigInteger.Parse(tbA.Text);
+            verifier.X = x;
             bool result = verifier.VerifyResponse(pub, res);
+
             tbZ.Text = verifier.Z.ToString();
             if (result)
             {
@@ -89,6 +91,8 @@ namespace CryptographyTemplate
 
         private void btnRespond_Click(object sender, EventArgs e)
         {
+            BigInteger secret = BigInteger.Parse(tbS.Text);
+            prover.Secret = secret;
             BigInteger ch = BigInteger.Parse(tbE.Text);
             prover.Response(ch);
             tbY.Text = prover.Y.ToString();
